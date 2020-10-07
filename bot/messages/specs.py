@@ -1,11 +1,10 @@
+import platform, cpuinfo
+cpuinfo = cpuinfo.get_cpu_info() # Get it before hand, takes time
+
 async def msg(msg):
-    commands = [
-    ['!help', 'No'],
-    ['!specs', 'Gives you my pc specs'],
-    ['!fan on|off', 'Control Mason\'s fan']
+    info=[
+    'Arch: '+platform.machine(),
+    'CPU: '+cpuinfo['brand_raw']+' \"'+cpuinfo['vendor_id_raw']+'\"',
+    'Operating system: '+platform.system()+' '+platform.release(),
     ]
-    helptext = 'Find help yourself you poop. Anyways here is my commands.\n\n'
-    for command in commands:
-        helptext = helptext+command[0]+' - '+command[1]+'\n'
-    helptext = helptext+'\nHappy now?'
-    await msg.channel.send(helptext)
+    await msg.channel.send('\n'.join(info))
